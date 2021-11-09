@@ -1,0 +1,1 @@
+python -m manim -p scene.py NachitenClass
