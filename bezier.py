@@ -2,33 +2,32 @@ from manim import *
 
 
 class BezierCurves(Scene):
-    p1 = np.array([-3, 1, 0])
-    p2 = np.array([3, -1, 0])
+    plane = NumberPlane(x_range=[-6, 6, 1], y_range=[-6, 6, 1],
+                        x_length=7, y_length=7,
+                        background_line_style={"stroke_color": TEAL,
+                                               "stroke_width": 2,
+                                               "stroke_opacity": 0.2}).add_coordinates().center()
+
+    p1 = plane.c2p(-3, 1)
+    p2 = plane.c2p(3.0, -1.0)
 
     dotp1 = Dot(point=p1).set_color(BLUE)
     dotp2 = Dot(point=p2).set_color(RED)
 
-    p1Control = p1 + [1, 1, 0]
-    p2Control = p2 - [1, 1, 0]
+    p1Control = plane.c2p(-2.0, 2.0)
+    p2Control = plane.c2p(2.0, -2.0)
 
     dotp1Control = Dot(point=p1Control).set_color(LIGHT_GRAY)
     dotp2Control = Dot(point=p2Control).set_color(LIGHT_GRAY)
 
-    line1 = Line(p1, p1Control).set_color(ORANGE)
-    line2 = Line(p2, p2Control).set_color(ORANGE)
+    line1 = Line(dotp1.get_center(), p1Control).set_color(ORANGE)
+    line2 = Line(dotp2.get_center(), p2Control).set_color(ORANGE)
 
-    bezierCurve = CubicBezier(start_anchor=p1, start_handle=p1Control,
-                              end_anchor=p2, end_handle=p2Control)
+    bezierCurve = CubicBezier(start_anchor=dotp1.get_center(), start_handle=p1Control,
+                              end_anchor=dotp2.get_center(), end_handle=p2Control)
 
     def construct(self):
-        # Lineas del plano
-        plane = NumberPlane(x_range=[-6, 6, 1], y_range=[-6, 6, 1],
-                            x_length=7, y_length=7,
-                            background_line_style={"stroke_color": TEAL,
-                                                   "stroke_width": 2,
-                                                   "stroke_opacity": 0.2}).add_coordinates().center()
-
-        self.play(Create(plane))
+        self.play(Create(self.plane))
 
         # Muestro los dos puntos
         self.play(Create(self.dotp1),
@@ -49,15 +48,15 @@ class BezierCurves(Scene):
 
         self.wait()
 
-        self.moverPuntosDeControlA(self.p1 + [2, 2, 0], self.p2 - [2, 2, 0])
+        self.moverPuntosDeControlA(self.plane.c2p(-1, 3), self.plane.c2p(1, 3))
 
         self.wait()
 
-        self.moverPuntosDeControlA(self.p1 - [3, 1, 0], self.p2 + [3, 1, 0])
+        self.moverPuntosDeControlA(self.plane.c2p(-3, 0), self.plane.c2p(-1, 1))
 
         self.wait()
 
-        self.moverPuntosDeControlA(self.p1 - [1, 3, 0], self.p2 + [1, 3, 0])
+        self.moverPuntosDeControlA(self.plane.c2p(-2, -6), self.plane.c2p(-4, -6))
 
         self.wait(3)
 
