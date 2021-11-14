@@ -56,7 +56,7 @@ class BezierCurves(Scene):
 
         self.wait()
 
-        self.moverPuntosDeControlA(self.plane.c2p(-2, -6), self.plane.c2p(-4, -6))
+        self.moverPuntosDeControlA(self.plane.c2p(-2, -2), self.plane.c2p(-1, -3))
 
         self.wait(3)
 
