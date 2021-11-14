@@ -1,40 +1,46 @@
 from manim import *
 
 
+def mostrarPlano(instance):
+    # Lineas del plano
+    plane = NumberPlane(x_range=[-6, 6, 1], y_range=[-6, 6, 1],
+                        x_length=7, y_length=7,
+                        background_line_style={"stroke_color": TEAL,
+                                               "stroke_width": 2,
+                                               "stroke_opacity": 0.2}).add_coordinates().center()
+
+    instance.play(Create(plane, run_time=2))
+    return plane
+
+
 class DiferentesSenos(Scene):
     def construct(self):
-        # Ejes
-        ax = Axes(x_range=[-6, 6, 1], y_range=[-3, 3, 1], x_length=12, y_length=6).add_coordinates()
 
-        # Lineas del plano
-        plane = NumberPlane(x_range=[-6, 6, 1], y_range=[-3, 3, 1],
-                            background_line_style={"stroke_color": TEAL,
-                                                   "stroke_width": 2,
-                                                   "stroke_opacity": 0.2})
+        plane = mostrarPlano(self)
 
         # Grafico de seno
-        sin_graph_1 = ax.plot(lambda x: np.sin(x), color=DARK_BLUE)
-        sin_graph_2 = ax.plot(lambda x: np.sin(2 * x), color=DARK_BLUE)
-        sin_graph_3 = ax.plot(lambda x: np.sin(3 * x), color=DARK_BLUE)
-        sin_graph_4 = ax.plot(lambda x: 2 * np.sin(3 * x), color=DARK_BLUE)
+        sin_graph_1 = plane.plot(lambda x: np.sin(x), color=DARK_BLUE)
+        sin_graph_2 = plane.plot(lambda x: np.sin(2 * x), color=DARK_BLUE)
+        sin_graph_3 = plane.plot(lambda x: np.sin(3 * x), color=DARK_BLUE)
+        sin_graph_4 = plane.plot(lambda x: 2 * np.sin(3 * x), color=DARK_BLUE)
 
         # Grafico de seno y coseno
-        cos_sin_graph = ax.plot(lambda x: 2 * np.sin(3 * x) + np.cos(x), color=GREEN)
+        cos_sin_graph = plane.plot(lambda x: 2 * np.sin(3 * x) + np.cos(x), color=GREEN)
 
         # Texto seno
-        sin_label_1 = ax.get_graph_label(sin_graph_1, label="sin(x)", x_val=-5, direction=UP * 4)
-        sin_label_2 = ax.get_graph_label(sin_graph_1, label="sin(2x)", x_val=-5, direction=UP * 4)
-        sin_label_3 = ax.get_graph_label(sin_graph_1, label="sin(3x)", x_val=-5, direction=UP * 4)
-        sin_label_4 = ax.get_graph_label(sin_graph_1, label="2sin(3x)", x_val=-5, direction=UP * 4)
-        cos_sin_label = ax.get_graph_label(cos_sin_graph, label="2sin(3x) + cos(x)", x_val=-5, direction=UP * 4)
+        sin_label_1 = plane.get_graph_label(sin_graph_1, label="sin(x)", x_val=-5, direction=UP * 4)
+        sin_label_2 = plane.get_graph_label(sin_graph_1, label="sin(2x)", x_val=-5, direction=UP * 4)
+        sin_label_3 = plane.get_graph_label(sin_graph_1, label="sin(3x)", x_val=-5, direction=UP * 4)
+        sin_label_4 = plane.get_graph_label(sin_graph_1, label="2sin(3x)", x_val=-5, direction=UP * 4)
+        cos_sin_label = plane.get_graph_label(cos_sin_graph, label="2sin(3x) + cos(x)", x_val=-5, direction=UP * 4)
 
         # Grafico de coseno
-        cos_graph = ax.plot(lambda x: np.cos(2 * x), color=RED)
+        cos_graph = plane.plot(lambda x: np.cos(2 * x), color=RED)
         # Texto coseno
-        cos_label = ax.get_graph_label(cos_graph, label="\\cos(x)", x_val=-5, direction=DOWN * 4)
+        cos_label = plane.get_graph_label(cos_graph, label="\\cos(x)", x_val=-5, direction=DOWN * 4)
 
         # Crea los ejes
-        self.play(Create(ax, run_time=2),
+        self.play(Create(plane, run_time=2),
                   Create(plane, run_time=2))
 
         # Creo seno
@@ -80,14 +86,14 @@ class DiferentesSenos(Scene):
                   FadeOut(cos_sin_label, run_time=1.5))
 
         # Borro ejes
-        self.play(Uncreate(ax), run_time=2)
+        self.play(Uncreate(plane), run_time=2)
 
         self.wait(0.5)
 
 
 class FuncionDienteDeSierra(Scene):
     def construct(self):
-        plane = self.mostrarPlano()
+        plane = mostrarPlano(self)
 
         self.wait(1)
 
@@ -109,17 +115,6 @@ class FuncionDienteDeSierra(Scene):
         self.mostrarArea(plane, valorMedio)
 
         self.wait(3)
-
-    def mostrarPlano(self):
-        # Lineas del plano
-        plane = NumberPlane(x_range=[-6, 6, 1], y_range=[-6, 6, 1],
-                            x_length=7, y_length=7,
-                            background_line_style={"stroke_color": TEAL,
-                                                   "stroke_width": 2,
-                                                   "stroke_opacity": 0.2}).add_coordinates().center()
-
-        self.play(Create(plane, run_time=2))
-        return plane
 
     def mostrarLineGraph(self, plane):
         line_graph = plane.plot_line_graph(
@@ -154,7 +149,7 @@ class FuncionCuadratica(Scene):
 
     def construct(self):
 
-        plano2D = self.mostrarPlano()
+        plano2D = mostrarPlano(self)
 
         self.wait(1)
 
@@ -207,21 +202,10 @@ class FuncionCuadratica(Scene):
 
         self.play(animations[0], animations[1], animations[2], animations[3], animations[4], animations[5])
 
-    def mostrarPlano(self):
-        # Lineas del plano
-        plane = NumberPlane(x_range=[-6, 6, 1], y_range=[-6, 6, 1],
-                            x_length=7, y_length=7,
-                            background_line_style={"stroke_color": TEAL,
-                                                   "stroke_width": 2,
-                                                   "stroke_opacity": 0.2}).add_coordinates().center()
-
-        self.play(Create(plane, run_time=2))
-        return plane
-
 
 class EscalonUnitario(Scene):
     def construct(self):
-        plane = self.mostrarPlano()
+        plane = mostrarPlano(self)
 
         # noinspection PyTypeChecker
         line_graph = plane.plot_line_graph(
@@ -236,14 +220,3 @@ class EscalonUnitario(Scene):
         self.play(Create(line_graph, run_time=2))
 
         self.wait(3)
-
-    def mostrarPlano(self):
-        # Lineas del plano
-        plane = NumberPlane(x_range=[-6, 6, 1], y_range=[-6, 6, 1],
-                            x_length=7, y_length=7,
-                            background_line_style={"stroke_color": TEAL,
-                                                   "stroke_width": 2,
-                                                   "stroke_opacity": 0.2}).add_coordinates().center()
-
-        self.play(Create(plane, run_time=2))
-        return plane
