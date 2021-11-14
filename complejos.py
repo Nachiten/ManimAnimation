@@ -1,42 +1,49 @@
 from manim import *
 
+labelColor = BLUE
+dotColor = YELLOW
+lineColor = ORANGE
 
-class CoordinateSystem(Scene):
+class NumerosComplejosBinomica(Scene):
     def construct(self):
+        def dot_position(mobject, dot):
+            mobject.set_value(dot.get_center()).set_color(labelColor)
+            mobject.next_to(dot, UP)
+
         # Lineas del plano
         plane = ComplexPlane(x_range=[-6, 6, 1], y_range=[-6, 6, 1],
                              x_length=7, y_length=7,
                              background_line_style={"stroke_color": TEAL,
                                                     "stroke_width": 2,
                                                     "stroke_opacity": 0.2}).add_coordinates()
-
         self.play(Create(plane, run_time=2))
 
         self.wait(1)
 
-        d1 = Dot(plane.n2p(2 + 1j), color=YELLOW)
-        d2 = Dot(plane.n2p(-3 - 2j), color=YELLOW)
-        label2 = MathTex("-3-2i").next_to(d2, UR, 0.1)
+        d1 = Dot(plane.n2p(2 + 1j), color=dotColor)
+        label = DecimalNumber(plane.p2n(d1.get_center()), num_decimal_places=2).set_color(labelColor)
+        label.add_updater(lambda mobject: dot_position(mobject, d1))
+        self.play(Create(d1),
+                  Write(label), run_time=1)
 
-        self.play(Create(d1, run_time=2),
-                  Create(d2, run_time=2),
-                  Create(label2, run_time=2))
+        h_line = always_redraw(lambda: plane.get_horizontal_line(d1.get_left()).set_color(lineColor))
+        v_line = always_redraw(lambda: plane.get_vertical_line(d1.get_bottom()).set_color(lineColor))
+        self.play(Create(h_line),
+                  Create(v_line))
 
-        h_line = always_redraw(lambda: plane.get_horizontal_line(d1.get_left()))
-        v_line = always_redraw(lambda: plane.get_vertical_line(d1.get_bottom()))
+        self.wait(1)
 
-        self.play(Create(h_line, run_time=2),
-                  Create(v_line, run_time=2))
+        d2 = Dot(plane.n2p(-1 + -2j), color=YELLOW)
+        self.play(Transform(d1, d2), run_time=2)
 
-        def dot_position(mobject):
-            mobject.set_value(d1.get_x())
-            mobject.next_to(d1)
+        self.wait(1)
 
-        label1 = MathTex()
-        label1.add_updater(dot_position)
+        d2 = Dot(plane.n2p(-1 + 2j), color=YELLOW)
+        self.play(Transform(d1, d2), run_time=2)
 
-        self.play(Create(label1))
+        self.wait(1)
 
-        self.wait(2)
+        d2 = Dot(plane.n2p(3 + -1j), color=YELLOW)
+        self.play(Transform(d1, d2), run_time=2)
 
         self.wait(3)
