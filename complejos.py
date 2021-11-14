@@ -7,7 +7,7 @@ lineColor = ORANGE
 class NumerosComplejosBinomica(Scene):
     def construct(self):
         def dot_position(mobject, dot):
-            mobject.set_value(dot.get_center()).set_color(labelColor)
+            mobject.set_value(plane.p2n(d1.get_center())).set_color(labelColor)
             mobject.next_to(dot, UP)
 
         # Lineas del plano
