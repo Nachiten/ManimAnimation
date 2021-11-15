@@ -176,14 +176,10 @@ class FuncionCuadratica(Scene):
         animations = []
 
         for i in range(self.xMin, self.xMax):
-            equisCuadrado = plane.plot(lambda x: (x - i) * (x - i), color=DARK_BLUE, x_range=(i, i + 1))
+            equisCuadrado = plane.plot(lambda x: (x - i) ** 2, color=DARK_BLUE, x_range=(i, i + 1))
             animations.append(Create(equisCuadrado, run_time=2))
 
-        self.play(animations[6])
-        self.wait(1)
-        self.play(animations[0], animations[1], animations[2], animations[3], animations[4], animations[5])
-        self.wait(0.5)
-        self.play(animations[7], animations[8], animations[9], animations[10], animations[11])
+        self.play(*animations)
 
     def mostrarValorMedio(self, plane):
         valorMedio = plane.plot(lambda x: 0.3, color=ORANGE)
@@ -194,13 +190,13 @@ class FuncionCuadratica(Scene):
         animations = []
 
         for i in range(self.xMin, self.xMax):
-            equisCuadrado = plane.plot(lambda x: (x - i) * (x - i), color=DARK_BLUE, x_range=(i, i + 1))
+            equisCuadrado = plane.plot(lambda x: (x - i) ** 2, color=DARK_BLUE, x_range=(i, i + 1))
             area = plane.get_area(valorMedio, bounded_graph=equisCuadrado,
                                   x_range=(i, i + 1),
                                   opacity=0.4)
             animations.append(Create(area, run_time=3))
 
-        self.play(animations[0], animations[1], animations[2], animations[3], animations[4], animations[5])
+        self.play(*animations)
 
 
 class EscalonUnitario(Scene):
@@ -220,3 +216,21 @@ class EscalonUnitario(Scene):
         self.play(Create(line_graph, run_time=2))
 
         self.wait(3)
+
+
+class ReplaceAndSlide(Scene):
+    def construct(self):
+        a = Tex("A").move_to(UP)
+        a2 = Tex("A").move_to(UP * 2)
+
+        b = Tex("B").move_to(LEFT)
+        b2 = Tex("B").move_to(LEFT * 2)
+
+        group1 = VGroup(a, a2)
+        group2 = VGroup(b, b2)
+
+        self.play(Write(group1))
+        self.wait(0.5)
+        self.play(Transform(group1, group2))
+
+        self.wait(1)
