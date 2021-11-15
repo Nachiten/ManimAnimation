@@ -1,10 +1,10 @@
 from manim import *
 
-xMin, xMax = -5, 15
-yMin, yMax = -5, 15
+xMin, xMax = -30, 30
+yMin, yMax = -50, 50
 xLength, yLength = 8, 8
 
-values = [0, 2, 4, 6, 8, 10, 12, 14]
+#values = [-10, -5, 0, 5, 10, 15, 20, 25]
 
 # lines = NumberPlane(x_range=[xMin, xMax, 1], y_range=[yMin, yMax, 1],
 #                    x_length=xLength, y_length=yLength,
@@ -12,8 +12,8 @@ values = [0, 2, 4, 6, 8, 10, 12, 14]
 #                                           "stroke_width": 2,
 #                                           "stroke_opacity": 0.2}).center()
 
-plane = Axes(x_range=[xMin, xMax, 1], y_range=[yMin, yMax, 1],
-             x_length=xLength, y_length=yLength).add_coordinates(values, values).center()
+plane = Axes(x_range=[xMin, xMax, 5], y_range=[yMin, yMax, 5],
+             x_length=xLength, y_length=yLength).add_coordinates().center()
 
 p1 = plane.c2p(-3, 1)
 p2 = plane.c2p(3.0, -1.0)
@@ -97,7 +97,7 @@ class Interpolation(Scene):
         self.wait(1)
 
         pointsTable = Table([["Xi", "0", "1", "3"],
-                             ["Yi", "3", "2", "12"]]).scale(0.4).move_to(RIGHT * 3 + UP * 3)
+                             ["Yi", "3", "2", "12"]]).scale(0.4).move_to(UP * 3)
         self.play(Create(pointsTable), run_time=2)
 
         self.wait(1)
@@ -122,3 +122,12 @@ class Interpolation(Scene):
         self.play(Create(interpFunc), run_time=4)
 
         self.wait(3)
+
+
+class CalculoPolInter(Scene):
+    def construct(self):
+        self.play(Create(plane))
+
+        self.wait(3)
+
+
