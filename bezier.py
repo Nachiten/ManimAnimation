@@ -1,19 +1,13 @@
 from manim import *
 
-xMin, xMax = -30, 30
-yMin, yMax = -50, 50
-xLength, yLength = 8, 8
+os.system("")
 
-#values = [-10, -5, 0, 5, 10, 15, 20, 25]
-
-# lines = NumberPlane(x_range=[xMin, xMax, 1], y_range=[yMin, yMax, 1],
-#                    x_length=xLength, y_length=yLength,
-#                    background_line_style={"stroke_color": TEAL,
-#                                           "stroke_width": 2,
-#                                           "stroke_opacity": 0.2}).center()
+xMin, xMax = -15, 15
+yMin, yMax = -15, 60
+xLength, yLength = 7, 7
 
 plane = Axes(x_range=[xMin, xMax, 5], y_range=[yMin, yMax, 5],
-             x_length=xLength, y_length=yLength).add_coordinates().center()
+             x_length=xLength, y_length=yLength).add_coordinates().move_to(LEFT * 2)
 
 p1 = plane.c2p(-3, 1)
 p2 = plane.c2p(3.0, -1.0)
@@ -90,44 +84,52 @@ class BezierCurves(Scene):
         self.play(Transform(groupAnterior, groupNuevo))
 
 
-class Interpolation(Scene):
-    def construct(self):
-        self.play(Create(plane))
-
-        self.wait(1)
-
-        pointsTable = Table([["Xi", "0", "1", "3"],
-                             ["Yi", "3", "2", "12"]]).scale(0.4).move_to(UP * 3)
-        self.play(Create(pointsTable), run_time=2)
-
-        self.wait(1)
-
-        dot1 = Dot(point=plane.c2p(0, 3)).set_color(RED)
-        dot2 = Dot(point=plane.c2p(1, 2)).set_color(RED)
-        dot3 = Dot(point=plane.c2p(3, 12)).set_color(RED)
-
-        dotsGroup = VGroup(dot1, dot2, dot3)
-
-        self.play(Create(dotsGroup), run_time=2)
-
-        self.wait(1)
-
-        formula = Tex(r"Funcion interpolante:$\linebreak$"
-                      r"$2x^{2} - 3x + 3$", font_size=42).move_to(RIGHT * 3 + UP * 2)
-        self.play(Create(formula), run_time=2)
-
-        self.wait(1)
-
-        interpFunc = plane.plot(lambda x: 2 * (x ** 2) - 3 * x + 3, color=DARK_BLUE)
-        self.play(Create(interpFunc), run_time=4)
-
-        self.wait(3)
+dot1 = Dot(point=plane.c2p(-2, 23)).set_color(RED)
+dot2 = Dot(point=plane.c2p(0, 3)).set_color(RED)
+dot3 = Dot(point=plane.c2p(1, 2)).set_color(RED)
+dot4 = Dot(point=plane.c2p(3, 18)).set_color(RED)
+dot5 = Dot(point=plane.c2p(4, 35)).set_color(RED)
 
 
 class CalculoPolInter(Scene):
     def construct(self):
-        self.play(Create(plane))
+        pointsTable = Table([["Xi", "-2", "0", "1", "3", "4"],
+                             ["Yi", "23", "3", "2", "18", "35"]]).scale(0.4).move_to(UP * 3)
+        self.play(Create(pointsTable), run_time=2)
+
+        self.wait(1)
+
+        texto1 = Tex("Vamos a calcular el polinomio interpolante:").scale(0.5).move_to(UP * 2)
+        self.play(Create(texto1))
+
+        self.wait(2)
+
+        pointsTableVertical = Table([["Xi", "Yi"],
+                                     ["-2", "23"],
+                                     ["0", "3"],
+                                     ["1", "2"],
+                                     ["3", "18"],
+                                     ["4", "35"]]).move_to(LEFT * 3).scale(0.4)
+
+        self.play(texto1.animate.move_to(UP * 3.5),
+                  Transform(pointsTable, pointsTableVertical), run_time=2)
+
+        self.wait(1)
+
+        # orden1 = Table([["Orden 1"], ["-10"], ["-1"], ["8"], ["17"]]).move_to(LEFT * 1.5 + UP * 0.025)
+        orden1 = Table([["Orden 1"], ["(3 - 23) / (0 - (-2))"], ["-"], ["-"], ["-"]]).move_to(LEFT * 1.5 + UP * 0.025)
+        orden1.remove(*orden1.get_horizontal_lines()).scale(0.4)
+        self.play(Create(orden1))
+
+        self.wait(1)
+
+        pointsTableVertical.add(pointsTableVertical.get_cell((3, 2), color=RED).scale(0.4))
+        pointsTableVertical.add(pointsTableVertical.get_cell((2, 2), color=GREEN).scale(0.4))
+        pointsTableVertical.add(pointsTableVertical.get_cell((3, 1), color=BLUE).scale(0.4))
+        pointsTableVertical.add(pointsTableVertical.get_cell((2, 1), color=YELLOW).scale(0.4))
+
+        self.play(Transform(pointsTable, pointsTableVertical), run_time=2)
+
+        self.wait(1)
 
         self.wait(3)
-
-
