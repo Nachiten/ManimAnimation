@@ -21,11 +21,17 @@ p2Control = plane.c2p(2.0, -2.0)
 dotp1Control = Dot(point=p1Control).set_color(LIGHT_GRAY)
 dotp2Control = Dot(point=p2Control).set_color(LIGHT_GRAY)
 
-line1 = Line(dotp1.get_center(), p1Control).set_color(ORANGE)
-line2 = Line(dotp2.get_center(), p2Control).set_color(ORANGE)
+line1 = Line(p1, p1Control).set_color(ORANGE)
+line2 = Line(p2, p2Control).set_color(ORANGE)
 
 bezierCurve = CubicBezier(start_anchor=dotp1.get_center(), start_handle=p1Control,
                           end_anchor=dotp2.get_center(), end_handle=p2Control)
+
+dot1 = Dot(point=plane.c2p(-2, 23)).set_color(RED)
+dot2 = Dot(point=plane.c2p(0, 3)).set_color(RED)
+dot3 = Dot(point=plane.c2p(1, 2)).set_color(RED)
+dot4 = Dot(point=plane.c2p(3, 18)).set_color(RED)
+dot5 = Dot(point=plane.c2p(4, 35)).set_color(RED)
 
 
 class BezierCurves(Scene):
@@ -82,13 +88,6 @@ class BezierCurves(Scene):
         groupNuevo = VGroup(bezierCurveb, line1b, line2b, dotp1Controlb, dotp2Controlb)
 
         self.play(Transform(groupAnterior, groupNuevo))
-
-
-dot1 = Dot(point=plane.c2p(-2, 23)).set_color(RED)
-dot2 = Dot(point=plane.c2p(0, 3)).set_color(RED)
-dot3 = Dot(point=plane.c2p(1, 2)).set_color(RED)
-dot4 = Dot(point=plane.c2p(3, 18)).set_color(RED)
-dot5 = Dot(point=plane.c2p(4, 35)).set_color(RED)
 
 
 class CalculoPolInter(Scene):
