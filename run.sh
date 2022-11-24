@@ -1,0 +1,1 @@
+manim -pqm scene.py TableExample

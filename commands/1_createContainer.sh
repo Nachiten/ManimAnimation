@@ -1,0 +1,1 @@
+docker run -it --name manim-container -v "/home/nachiten/ReposNacho/ManimAnimation-Python:/manim" manimcommunity/manim:stable /bin/bash
