@@ -1,1 +1,1 @@
-manim -pqm scene.py TableExample
+manim -pqm simplex.py SimplexTest
