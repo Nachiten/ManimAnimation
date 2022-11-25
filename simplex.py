@@ -65,26 +65,3 @@ class SimplexTest(Scene):
         # group = VGroup(table, redRectangle)
         # # Animate removing group
         # self.play(FadeOut(group), run_time=1)
-
-
-class Dyntable(Scene):
-    def construct(self):
-        table = Table(
-            [["This", "is a"],
-             ["simple", "Table."]]
-        )
-
-        self.add(table)
-        self.wait(2)
-
-        field = table.get_entries((2, 1)).animate.set_color(RED)
-
-        self.wait(2)
-        # field.become(Text("changed").move_to(field).set_color(field.get_color()))
-        self.play(
-            ReplacementTransform(
-                field,
-                Text("changed").move_to(field).set_color(field.get_color())
-            )
-        )
-        self.wait(2)

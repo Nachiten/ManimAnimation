@@ -1,0 +1,1 @@
+manim -pqm example.py Dyntable
