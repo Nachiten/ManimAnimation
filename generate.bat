@@ -1,1 +1,1 @@
-python -m manim -p scene.py NachitenClass
+python -m manim -p fourier.py DiferentesSenos

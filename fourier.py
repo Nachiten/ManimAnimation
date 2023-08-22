@@ -24,7 +24,7 @@ class DiferentesSenos(Scene):
         sin_graph_3 = plane.plot(lambda x: np.sin(3 * x), color=DARK_BLUE)
         sin_graph_4 = plane.plot(lambda x: 2 * np.sin(3 * x), color=DARK_BLUE)
 
-        # Grafico de seno y coseno
+        # Gráfico de seno y coseno
         cos_sin_graph = plane.plot(lambda x: 2 * np.sin(3 * x) + np.cos(x), color=GREEN)
 
         # Texto seno
