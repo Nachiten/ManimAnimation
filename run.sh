@@ -1,0 +1,1 @@
+manim -pqm simplex.py SimplexTest
